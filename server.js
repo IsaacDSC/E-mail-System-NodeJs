@@ -1,21 +1,21 @@
-//add modules
-const express = require('express')
-const app = express()
-    //adionando module nodemiler responsável por eviar email
 const nodemailer = require('nodemailer')
 
-//adicionando routes
-const home = require('./routes/home')
-const send = require('./routes/send')
+let transporter = nodemailer.createTransport({
+    service: 'Hotmail',
+    auth: {
+        user: 'isaac8.silva@hotmail.com',
+        pass: 'RAISSAsenha'
+    }
+})
 
-
-//adionando route
-app.use('/', home)
-
-
-const PORT = 3000
-app.listen(PORT, () => {
-    console.log(`Servidor iniciado!`)
-    console.log(`http://localhost:${PORT}`)
-    console.log('BREAK SERVER ctrl + c')
+transporter.sendMail({
+    from: 'Isaac Dsc <isaac8.silva@hotmail.com>',
+    to: 'isaacdsc10@gmail.com',
+    subject: 'Ola, sou Isaac e estou trabalhando com nodemailer',
+    text: 'Olá estou gostando bastante da lib nodemailer',
+    html: 'Para mais info:<a href="https://www.google.com/search?q=google&rlz=1C1GCEB_enBR891BR891&oq=goog&aqs=chrome.0.69i59j69i57j69i59j69i60l2j69i65l3.471j0j7&sourceid=chrome&ie=UTF-8">Pesquise no google</a>'
+}).then((message) => {
+    console.log(message)
+}).catch((err) => {
+    console.log(err)
 })
